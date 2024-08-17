@@ -31,9 +31,9 @@ def predict():
 
     try:
         # Load pretrained model as clf. Try any one model. 
-        clf = joblib.load("./Housing_price_model/LinearRegression.joblib")
+        # clf = joblib.load("./Housing_price_model/LinearRegression.joblib")
         # clf = joblib.load("./Housing_price_model/StochasticGradientDescent.joblib")
-        # clf = joblib.load("./Housing_price_model/GradientBoostingRegressor.joblib")
+        clf = joblib.load("./Housing_price_model/GradientBoostingRegressor.joblib")
     except Exception as e:
         LOG.error("Error loading model: %s", e)
         return jsonify({"error": "Model not loaded", "details": str(e)})
