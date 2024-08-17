@@ -24,6 +24,14 @@ stages:
         pip install -r requirements.txt
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
+      
+    - script: |
+        python3 -m venv antenv
+        source antenv/bin/activate
+        make install
+        make lint
+      workingDirectory: $(projectRoot)
+      displayName: "Install requirements"
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
