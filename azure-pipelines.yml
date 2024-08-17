@@ -13,8 +13,8 @@ variables:
   # Web app name
   webAppName: 'flask-ml-azure-sayan'
 
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  # Agent VM image name (remove this as you're using a self-hosted agent)
+  # vmImageName: 'ubuntu-latest'
 
   # Environment name
   environmentName: 'flask-ml-azure-sayan'
@@ -31,7 +31,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      vmImage: $(vmImageName)
+      name: 'MacBook Pool'  # Change to your self-hosted agent pool name
     steps:
     - task: UsePythonVersion@0
       inputs:
@@ -67,7 +67,7 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      vmImage: $(vmImageName)
+      name: 'MacBook Pool'  # Change to your self-hosted agent pool name
     environment: $(environmentName)
     strategy:
       runOnce:
