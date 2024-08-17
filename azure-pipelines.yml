@@ -14,7 +14,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: 'myagentpool'  # Stelle sicher, dass dies dein MacBook-Agent-Pool ist
+      name: 'myagentpool' 
     steps:
     - script: |
         python3 -m venv antenv
@@ -53,7 +53,7 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      name: 'MacBook Pool'
+      name: 'myagentpool'
     environment: $(environmentName)
     strategy:
       runOnce:
