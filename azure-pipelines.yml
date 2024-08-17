@@ -14,7 +14,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: 'MacBook Pool'  # Stelle sicher, dass dies dein MacBook-Agent-Pool ist
+      name: 'myagentpool'  # Stelle sicher, dass dies dein MacBook-Agent-Pool ist
     steps:
     - script: |
         python3 -m venv antenv
