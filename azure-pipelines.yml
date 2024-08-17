@@ -1,28 +1,11 @@
-# Python to Linux Web App on Azure
-# Build your Python project and deploy it to Azure as a Linux Web App.
-# Change python version to one thats appropriate for your application.
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
 trigger:
 - main
 
 variables:
-  # Azure Resource Manager connection created during pipeline creation
   azureServiceConnectionId: '43fd33e3-498c-48cf-a50e-9ace4dc2c1d8'
-
-  # Web app name
   webAppName: 'flask-ml-azure-sayan'
-
-  # Agent VM image name (remove this as you're using a self-hosted agent)
-  # vmImageName: 'ubuntu-latest'
-
-  # Environment name
   environmentName: 'flask-ml-azure-sayan'
-
-  # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
-
-  # Python version: 3.7
   pythonVersion: '3.7'
 
 stages:
@@ -31,17 +14,12 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: 'MacBook Pool'  # Change to your self-hosted agent pool name
+      name: 'MacBook Pool'  # Stelle sicher, dass dies dein MacBook-Agent-Pool ist
     steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '$(pythonVersion)'
-      displayName: 'Use Python $(pythonVersion)'
-
     - script: |
-        python -m venv antenv
+        python3 -m venv antenv
         source antenv/bin/activate
-        python -m pip install --upgrade pip
+        python3 -m pip install --upgrade pip
         pip install setup
         pip install -r requirements.txt
       workingDirectory: $(projectRoot)
@@ -67,21 +45,20 @@ stages:
   jobs:
   - deployment: DeploymentJob
     pool:
-      name: 'MacBook Pool'  # Change to your self-hosted agent pool name
+      name: 'MacBook Pool'
     environment: $(environmentName)
     strategy:
       runOnce:
         deploy:
           steps:
-
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '$(pythonVersion)'
-            displayName: 'Use Python version'
-
+          - script: |
+              source antenv/bin/activate
+              pip install -r requirements.txt
+            displayName: 'Ensure Python environment'
+          
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : flask-ml-azure-sayan'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+              package: $(Pipeline.Workspace)/
