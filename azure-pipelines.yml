@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  azureServiceConnectionId: '43fd33e3-498c-48cf-a50e-9ace4dc2c1d8'
+  azureServiceConnectionId: '773a57bf-7669-481b-bbba-fd48caf961c7'
   webAppName: 'flask-ml-azure-sayan'
   environmentName: 'flask-ml-azure-sayan'
   projectRoot: $(System.DefaultWorkingDirectory)
