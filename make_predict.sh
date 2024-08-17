@@ -25,4 +25,4 @@ curl -d '{
    }
 }'\
      -H "Content-Type: application/json" \
-     -X POST http://localhost:$PORT/predict
+     -X POST http://https://flask-ml-azure-sayan.azurewebsites.net/:$PORT/predict
